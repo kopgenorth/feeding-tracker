@@ -2,23 +2,21 @@
     <script src='bower_components/angular/angular.js'></script>
 </head>
 
-<body ng-app=FeedingTracker>
+<body ng-app=FeedingTracker ng-controller="FeedingController">
     <h1>
         Feeding Tracker
     </h1>
     <div>
         <p>Total Amount: {{totalAmount}}</p>
-        <p>Average time between feedings: {{averageInterval}}</p>
+        <p>Average time between feedings: {{averageInterval | number:2}} hours</p>
         <p>Meds given: {{medsGiven}}</p>
     </div>
 
-    <div ng-controller="FeedingController">
+    <div >
         <span>
                Amount (ml):<input type=number ng-model='feedingEntry.amount'>
         </span>
-              <span>
-               Person:<input type=text ng-model='feedingEntry.person'>
-        </span>
+
         <span>
                Time:<input required type=time placeholder="HH:mm:ss" ng-model='feedingEntry.time'>
         </span>
@@ -37,37 +35,41 @@
                 <option value='1'>Full</option>
             </select>
         </span>
+        <span>
+               Person:<input type=text ng-model='feedingEntry.person'>
+        </span>
 
         <button ng-click='addFeeding()'>Add Feeding</button>
         <table>
             <thead>
                 <tr>
                     <th>Amount</th>
-                    <th>Person</th>
                     <th>Time</th>
                     <th>Type</th>
                     <th>Meds</th>
+                    <th>Person</th>
                 </tr>
             </thead>
-            <tr ng-repeat='feeding in feedings'>
-                    <td>
-                        {{feeding.amount}}
-                    </td>
-                    <td>
-                        {{feeding.person}}
-                    </td>
-                    <td>
-                        {{feeding.time | date: "h:mm a"}}
-                    </td>
-                    <td>
-                        {{feeding.type}}
-                    </td>
-                    <td>
-                        {{feeding.meds}}
-                    </td>
-                </tr>
+            <tr ng-repeat='feeding in feedings | orderBy:"time"'>
+                <td>
+                    {{feeding.amount}}
+                </td>
+                <td>
+                    {{feeding.time | date: "h:mm a"}}
+                </td>
+                <td>
+                    {{feeding.type}}
+                </td>
+                <td>
+                    {{feeding.meds}}
+                </td>
+                <td>
+                    {{feeding.person}}
+                </td>
+
+            </tr>
         </table>
-        </div>
+    </div>
     </div>
     <script src='main.js'></script>
 
