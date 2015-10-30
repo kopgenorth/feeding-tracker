@@ -1,7 +1,76 @@
 <head>
-    <body>
-        <h1>
-        Hello World!
-        </h1>
-    </body>
+    <script src='bower_components/angular/angular.js'></script>
 </head>
+
+<body ng-app=FeedingTracker>
+    <h1>
+        Feeding Tracker
+    </h1>
+    <div>
+        <p>Total Amount: {{totalAmount}}</p>
+        <p>Average time between feedings: {{averageInterval}}</p>
+        <p>Meds given: {{medsGiven}}</p>
+    </div>
+
+    <div ng-controller="FeedingController">
+        <span>
+               Amount (ml):<input type=number ng-model='feedingEntry.amount'>
+        </span>
+              <span>
+               Person:<input type=text ng-model='feedingEntry.person'>
+        </span>
+        <span>
+               Time:<input required type=time placeholder="HH:mm:ss" ng-model='feedingEntry.time'>
+        </span>
+        <span>
+               Type:
+                <select required ng-model='feedingEntry.type'>
+                    <option value='Bottle'>Bottle</option>
+                    <option value='Breast'>Breast</option>
+                </select>
+        </span>
+        <span>
+            Meds:
+            <select required ng-model='feedingEntry.meds'>
+                <option value='0'>None</option>
+                <option value='.5'>Half</option>
+                <option value='1'>Full</option>
+            </select>
+        </span>
+
+        <button ng-click='addFeeding()'>Add Feeding</button>
+        <table>
+            <thead>
+                <tr>
+                    <th>Amount</th>
+                    <th>Person</th>
+                    <th>Time</th>
+                    <th>Type</th>
+                    <th>Meds</th>
+                </tr>
+            </thead>
+            <tr ng-repeat='feeding in feedings'>
+                    <td>
+                        {{feeding.amount}}
+                    </td>
+                    <td>
+                        {{feeding.person}}
+                    </td>
+                    <td>
+                        {{feeding.time | date: "h:mm a"}}
+                    </td>
+                    <td>
+                        {{feeding.type}}
+                    </td>
+                    <td>
+                        {{feeding.meds}}
+                    </td>
+                </tr>
+        </table>
+        </div>
+    </div>
+    <script src='main.js'></script>
+
+    <script src='services/feedingService.js'></script>
+    <script src='controllers/feedingController.js'></script>
+</body>
