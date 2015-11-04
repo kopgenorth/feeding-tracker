@@ -1,12 +1,14 @@
 <head>
     <script src='bower_components/angular/angular.js'></script>
-    <script src='bower_components/angular-mocks/angular-mocks.js'></script>
+
     <title>Mocha Spec Runner</title>
     <link rel=stylesheet href='bower_components/mocha/mocha.css'>
 </head>
 
 <body ng-app=FeedingTracker>
-
+    <h1>
+        Sweet unit tests
+        </h1>
     <div id="mocha"></div>
     <script src='bower_components/mocha/mocha.js'></script>
     <script src='bower_components/chai/chai.js'></script>
@@ -14,9 +16,7 @@
         mocha.setup('bdd');
     </script>
 
-    <h1>
-        Hello World!
-        </h1>
+    <script src='bower_components/angular-mocks/angular-mocks.js'></script>
     <script src='main.js'></script>
     <script src='main.spec.js'></script>
     <script src='services/feedingService.js'></script>
