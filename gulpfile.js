@@ -1,9 +1,10 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
+var karma = require('karma').server;
 
-gulp.task('serve', function(){
+gulp.task('serve', function () {
     browserSync.init({
-       notify: false,
+        notify: false,
         port: 8080,
         server: {
             baseDir: ["app"],
@@ -14,15 +15,23 @@ gulp.task('serve', function(){
     });
 
     gulp.watch(['app/**/*.*'])
-    .on('change', browserSync.reload);
+        .on('change', browserSync.reload);
 })
 
-gulp.task('serve-tests', function(){
+gulp.task('test-browser', function () {
+    karma.start({
+        configFile: __dirname + '/karma.conf.js',
+        singleRun: true,
+        reporters: ['mocha']
+    });
+})
+
+gulp.task('serve-tests', function () {
     browserSync.init({
-       notify: false,
+        notify: false,
         port: 8081,
         server: {
-            baseDir: ["test","app"],
+            baseDir: ["test", "app"],
             routes: {
                 '/bower_components': 'bower_components'
             }
@@ -30,5 +39,5 @@ gulp.task('serve-tests', function(){
     });
 
     gulp.watch(['app/**/*.*'])
-    .on('change', browserSync.reload);
+        .on('change', browserSync.reload);
 })

@@ -13,19 +13,23 @@
 
         $scope.totalAmount = feedingService.getTotalAmount();
 
-        $scope.feedingEntry = getNewFeeding();
+        $scope.feedingEntry = {};
 
         $scope.addFeeding = function () {
-//            $scope.feedings.push($scope.feedingEntry);
+            //            $scope.feedings.push($scope.feedingEntry);
             feedingService.addFeeding($scope.feedingEntry);
-            $scope.feedingEntry = getNewFeeding();
+//            $scope.feedingEntry = getNewFeeding();
+            $scope.getNewFeeding();
             $scope.totalAmount = feedingService.getTotalAmount();
             $scope.averageInterval = feedingService.getAverageInterval();
         };
 
-        function getNewFeeding(){
-            return {
+        $scope.getNewFeeding = function () {
+            /*return {
                 time:new Date()
+            };*/
+            $scope.feedingEntry = {
+                time: new Date()
             };
         };
     };
