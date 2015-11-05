@@ -18,6 +18,15 @@
             return total;
         };
 
+        this.getMedsGiven = function(){
+          var totalMeds = 0;
+            for (var feeding of service.feedings)
+                {
+                    totalMeds += feeding.meds;
+                }
+            return totalMeds >= 1 ? 'Yes' : 'No';
+        };
+
         this.getAverageInterval = function () {
             var totalMilliseconds = 0
             var sortedFeedings = service.feedings.sort(function(a,b){
