@@ -1,1 +1,1 @@
-angular.module("FeedingTracker", []);
+angular.module("FeedingTracker", ['ui.bootstrap']);

@@ -1,83 +1,127 @@
 <head>
     <script src='bower_components/angular/angular.js'></script>
+    <script src='bower_components/angular-bootstrap/ui-bootstrap.js'></script>
+    <script src='bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 </head>
 
 <body ng-app=FeedingTracker ng-controller="FeedingController">
-    <h1>
+    <uib-accordion class="pull-right">
+        <uib-accordion-group is-open="status.open">
+            <uib-accordion-heading>
+
+                Feeding Calculator <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+            </uib-accordion-heading>
+            <!--            <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Toggle collapse</button>-->
+            <div ng-controller="FeedAmountsCalculatedController">
+                <label>Baby Weight</label>
+                <input class="form-control" type="number" ng-model='babyWeightLbs' />
+                <label>feeds per day</label>
+                <input class="form-control" type="number" ng-model='feedsPerDay' />
+
+                <pre>recommended feeding amount (ml): {{amountPerFeeding}}</pre>
+                <!--                <button ng-click='calculateClick()'>Calculate</button>-->
+            </div>
+        </uib-accordion-group>
+    </uib-accordion>
+    <div style="width:75%;" class="center-block">
+        <h1>
         Feeding Tracker
     </h1>
-    <div>
-        <p>Total Amount: {{totalAmount}}</p>
-        <p>Average time between feedings: {{averageInterval | number:2}} hours</p>
-        <p>Meds given: {{medsGiven}}</p>
-    </div>
-    <div style="float:right;">
-    baby weight
-    feeds per day
-    recommended feeding amount (ml)
-    </div>
+        <div class="form-inline">
+           <div class="form-group">
+            <pre><label>Total Amount:</label> {{totalAmount}} (ml)</pre>
+            <pre><label>Average time between feedings:</label> {{averageInterval | number:2}} hours</pre>
+            <pre><label>Meds given:</label> {{medsGiven}}</pre>
+            </div>
+        </div>
 
-    <div >
-        <span>
-               Amount (ml):<input type=number ng-model='feedingEntry.amount'>
-        </span>
-
-        <span>
-               Time:<input required type=time placeholder="HH:mm:ss" ng-model='feedingEntry.time'>
-        </span>
-        <span>
-               Type:
-                <select required ng-model='feedingEntry.type'>
+        <div>
+           <h3>Enter feeding information</h3>
+            <div class='form-inline'>
+                <label class=sr-only>Amount (ml)</label>
+                <div class="input-group">
+                    <input type=number ng-model='feedingEntry.amount' class='form-control' placeholder="Amount">
+                    <div class="input-group-addon">ml</div>
+                </div>
+            </div>
+            <div class="form-inline row-fluid">
+                <div class='form-group col-md-4'>
+                    <!--                    <label>Time</label>-->
+                    <uib-timepicker ng-model='feedingEntry.time'></uib-timepicker>
+                    <!--               <input required type=time placeholder="HH:mm:ss" ng-model='feedingEntry.time'>-->
+                </div>
+                <div class='form-group col-md-4'>
+                    <!--                    <label>Type</label>-->
+                    <!--<select required ng-model='feedingEntry.type'>
                     <option value='Bottle'>Bottle</option>
                     <option value='Breast'>Breast</option>
-                </select>
-        </span>
-        <span>
-            Meds:
-            <select required ng-model='feedingEntry.meds'>
+                </select>-->
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-model="feedingEntry.type" uib-btn-radio="'Bottle'">Bottle</label>
+                        <label class="btn btn-primary" ng-model="feedingEntry.type" uib-btn-radio="'Breast'">Breast</label>
+                    </div>
+                </div>
+                <div class='form-group col-md-4'>
+                    <!--                    <label>Meds</label>-->
+                    <!--<select required ng-model='feedingEntry.meds'>
                 <option value='0'>None</option>
                 <option value='.5'>Half</option>
                 <option value='1'>Full</option>
-            </select>
-        </span>
-        <span>
-               Person:<input type=text ng-model='feedingEntry.person'>
-        </span>
+            </select>-->
+                    <div class="btn-group">
+                        <label class="btn btn-primary" ng-model="feedingEntry.meds" uib-btn-radio="0">No Meds</label>
+                        <label class="btn btn-primary" ng-model="feedingEntry.meds" uib-btn-radio=".5">Half-Dos</label>
+                        <label class="btn btn-primary" ng-model="feedingEntry.meds" uib-btn-radio="1">Full-Dos</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-inline">
+                <!--            <label>Person</label>-->
+                <input class="form-control" type=text ng-model='feedingEntry.person' placeholder="Name of feeding person">
+                <button class="btn btn-success" ng-click='addFeeding()'>Add Feeding</button>
+            </div>
+           <!-- <div class="form-group">
+                <button class="btn btn-success" ng-click='addFeeding()'>Add Feeding</button>
+            </div>-->
+            <h2>
+                Previous feedings
+            </h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Amount</th>
+                        <th>Time</th>
+                        <th>Type</th>
+                        <th>Meds</th>
+                        <th>Person</th>
+                    </tr>
+                </thead>
+                <tr ng-repeat='feeding in feedings | orderBy:"time"'>
+                    <td>
+                        {{feeding.amount}}
+                    </td>
+                    <td>
+                        {{feeding.time | date: "h:mm a"}}
+                    </td>
+                    <td>
+                        {{feeding.type}}
+                    </td>
+                    <td>
+                        {{feeding.meds}}
+                    </td>
+                    <td>
+                        {{feeding.person}}
+                    </td>
 
-        <button ng-click='addFeeding()'>Add Feeding</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Amount</th>
-                    <th>Time</th>
-                    <th>Type</th>
-                    <th>Meds</th>
-                    <th>Person</th>
                 </tr>
-            </thead>
-            <tr ng-repeat='feeding in feedings | orderBy:"time"'>
-                <td>
-                    {{feeding.amount}}
-                </td>
-                <td>
-                    {{feeding.time | date: "h:mm a"}}
-                </td>
-                <td>
-                    {{feeding.type}}
-                </td>
-                <td>
-                    {{feeding.meds}}
-                </td>
-                <td>
-                    {{feeding.person}}
-                </td>
-
-            </tr>
-        </table>
+            </table>
+        </div>
     </div>
     </div>
     <script src='main.js'></script>
 
     <script src='services/feedingService.js'></script>
     <script src='controllers/feedingController.js'></script>
+    <script src='controllers/feedAmountsCalculatedController.js'></script>
 </body>
