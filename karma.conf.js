@@ -19,6 +19,12 @@ module.exports = function (config) {
             'bower_components/mocha/mocha.js',
             'bower_components/chai/chai.js',
             'bower_components/angular-mocks/angular-mocks.js',
+            'bower_components/angular-bootstrap/ui-bootstrap.js',
+            'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+            'bower_components/moment/moment.js',
+            'node_modules/angular-moment/angular-moment.js',
+            'node_modules/moment-duration-format/lib/moment-duration-format.js',
+
 
             'app/*.js',
             'app/**/*.js',

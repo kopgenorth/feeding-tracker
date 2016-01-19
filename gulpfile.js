@@ -9,7 +9,8 @@ gulp.task('serve', function () {
         server: {
             baseDir: ["app"],
             routes: {
-                '/bower_components': 'bower_components'
+                '/bower_components': 'bower_components',
+                '/node_modules': 'node_modules'
             }
         }
     });
@@ -33,7 +34,8 @@ gulp.task('serve-tests', function () {
         server: {
             baseDir: ["test", "app"],
             routes: {
-                '/bower_components': 'bower_components'
+                '/bower_components': 'bower_components',
+                '/node_modules': 'node_modules'
             }
         }
     });

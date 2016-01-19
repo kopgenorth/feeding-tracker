@@ -40,7 +40,8 @@ describe("The feeding tracker app", function () {
         it("should return a new feeding object with the time set", function () {
             //            chai.assert.equal($scope.feedingEntry, {});
             $scope.getNewFeeding();
-            chai.assert.typeOf($scope.feedingEntry.time, 'date');
+            chai.assert.equal($scope.feedingEntry.time, new moment())
+//            chai.assert.typeOf($scope.feedingEntry.time, new moment().getType());
         })
 
 
@@ -103,7 +104,9 @@ describe("The feeding tracker app", function () {
                 time: new Date(2015, 11, 1, 13, 0, 0,0)
             });
 
-            chai.assert.equal(feedingService.getAverageInterval(), 2)
+            var average = feedingService.getAverageInterval().asHours();
+            var expected = new moment.duration({hours:2}).asHours();
+            chai.assert.equal(average,expected);
         })
 
         it("should average the hour interval between feedings - regardless of order entered", function () {
@@ -124,7 +127,7 @@ describe("The feeding tracker app", function () {
                 time: new Date(2015, 11, 1, 8, 0, 0,0)
             });
 
-            chai.assert.equal(feedingService.getAverageInterval(), 2)
+            chai.assert.equal(feedingService.getAverageInterval().asHours(), new moment.duration({hours:2}).asHours())
         })
     })
 })

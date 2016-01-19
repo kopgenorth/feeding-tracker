@@ -31,7 +31,7 @@
                 time:new Date()
             };*/
             $scope.feedingEntry = {
-                time: new Date()
+                time: moment()
             };
         };
 

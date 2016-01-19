@@ -2,6 +2,9 @@
     <script src='bower_components/angular/angular.js'></script>
     <script src='bower_components/angular-bootstrap/ui-bootstrap.js'></script>
     <script src='bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'></script>
+    <script src="node_modules/moment/moment.js"></script>
+    <script src="node_modules/angular-moment/angular-moment.js"></script>
+    <script src="node_modules/moment-duration-format/lib/moment-duration-format.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
 </head>
 
@@ -13,7 +16,7 @@
                 Feeding Calculator <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
             </uib-accordion-heading>
             <!--            <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Toggle collapse</button>-->
-            <div ng-controller="FeedAmountsCalculatedController">
+            <div ng-controller="FeedAmountsCalculatedController" class="form-group">
                 <label>Baby Weight</label>
                 <input class="form-control" type="number" ng-model='babyWeightLbs' />
                 <label>feeds per day</label>
@@ -31,7 +34,7 @@
         <div class="form-inline">
            <div class="form-group">
             <pre><label>Total Amount:</label> {{totalAmount}} (ml)</pre>
-            <pre><label>Average time between feedings:</label> {{averageInterval | number:2}} hours</pre>
+            <pre><label>Average time between feedings:</label> {{averageInterval | durFormat}}</pre>
             <pre><label>Meds given:</label> {{medsGiven}}</pre>
             </div>
         </div>
@@ -71,8 +74,8 @@
             </select>-->
                     <div class="btn-group">
                         <label class="btn btn-primary" ng-model="feedingEntry.meds" uib-btn-radio="0">No Meds</label>
-                        <label class="btn btn-primary" ng-model="feedingEntry.meds" uib-btn-radio=".5">Half-Dos</label>
-                        <label class="btn btn-primary" ng-model="feedingEntry.meds" uib-btn-radio="1">Full-Dos</label>
+                        <label class="btn btn-primary" ng-model="feedingEntry.meds" uib-btn-radio=".5">Half-Dose</label>
+                        <label class="btn btn-primary" ng-model="feedingEntry.meds" uib-btn-radio="1">Full-Dose</label>
                     </div>
                 </div>
             </div>
